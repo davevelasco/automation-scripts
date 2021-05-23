@@ -24,11 +24,17 @@ sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io -y
 
 # Install latest version of Compose
-# Get latest tag
-
 latest=`curl -s https://api.github.com/repos/docker/compose/releases/latest \
 | grep -w "browser_download_url.*docker-compose-$(uname -s)-$(uname -m)\"" \
 | cut -d : -f 2,3 | tr -d \"`
 
 sudo curl -L $latest -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+
+# Run Docker as non-root user
+sudo groupadd docker
+sudo usermod -aG docker $USER
+
+# Start Docker on boot
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
