@@ -34,6 +34,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 # Run Docker as non-root user
 sudo groupadd docker
 sudo usermod -aG docker $USER
+newgrp docker
 
 # Start Docker on boot
 sudo systemctl enable docker.service
